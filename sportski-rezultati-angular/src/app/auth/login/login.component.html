@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-sm-4 col-md-4 col-lg-6 login-image">
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-6 login-section">
+        <h2 style="text-align: center;">Login to play</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="form-group row">
+                <label for="user_name" class="col-md-4 col-form-label text-md-right">Username</label>
+                <div class="col-md-6">
+                    <input type="text" id="user_name" class="form-control" [formControlName]="'username'"
+                        name="user_name" required autofocus>
+                    <span *ngIf="!loginForm?.get('username')?.valid && loginForm?.get('username')?.touched">
+                        Username is required field
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                <div class="col-md-6">
+                    <input type="password" id="password" class="form-control" [formControlName]="'password'"
+                        name="password" required>
+                    <span *ngIf="!loginForm?.get('password')?.valid && loginForm?.get('password')?.touched">
+                        Password is required field
+                    </span>
+                </div>
+            </div>
+
+            <span class="col-md-6  offset-md-2">
+                <button type="submit" class="btn btn-success">
+                    Login
+                </button>
+                <span style="padding-left: 15px"><a routerLink="/signUp">Sign up</a></span>
+            </span>
+            <div *ngIf='this.hasErrors'>
+                <p>Credentials incorrect. Please try again</p>
+            </div> 
+        </form>
+    </div>
+</div>

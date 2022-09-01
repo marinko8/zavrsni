@@ -1,0 +1,93 @@
+<div class="header-container">
+    <div class="row" style="display: flex; justify-content: flex-end;">
+        <div class="col-1 bars-menu-btn">
+            <i (click)="toggleMobileMenu()" class="fa-solid fa-bars fa-2xl"></i>
+        </div>
+    </div>
+    <hr class="hr-burger-menu">
+    <div class="row" [ngClass]="{'menu-mobile-hide' : !burgerMenuOpen}" style="margin: 0;">
+        <div class="col-12 col-md-7 header-btn-container">
+            <button (click)="loadMyProfile()" class="btn btn-primary header-btn" style="display: inline;">
+                My profile <span class="badge badge-light">{{activeBets}}</span>
+            </button>
+            <button class="btn btn-danger header-btn" style="display: inline;">Logout</button>
+        </div>
+        <div class="col-12 col-md-5 search-container">
+            <form [formGroup]="searchForm" (ngSubmit)="search()">
+                <div class="form-group search-form-group" style="float: right; width: 100%;">
+                    <input type="text" id="searchText" class="form-control" style="display: inline;" [formControlName]="'searchText'"
+                            name="searchText" placeholder="Search" autofocus>
+                        <button type="submit" class="btn btn-success" style="margin-left: 20px;">
+                            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                        </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="search-results" *ngIf="searchResults">
+    <button class="btn btn-secondary cancel-search-btn" (click)="cancelSearch()"><i class="fa-solid fa-angles-left"></i></button>
+    <div  *ngFor="let user of searchUsers">
+        <div (click)="loadUser(user.id)" class="row search-user">
+            <div class="col-2">
+                <div class="user-picture">
+                    <span>{{user.initials}}</span>
+                </div>
+            </div>
+            <div class="col-3">
+                <span>{{user.name}}</span>
+            </div>
+            <div class="col-3">
+                <span>{{user.surname}}</span>
+            </div>
+            <div class="col-4">
+                <span>( {{user.username}} )</span>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="header-container">
+    <div class="row">
+        <div class="menu-content">
+            <div class="col-4">
+                <button class="btn btn-primary header-btn" style="display: inline;">
+                    My profile <span class="badge badge-light">{{activeBets}}</span>
+                </button>
+                <button class="btn btn-danger header-btn" style="display: inline;">Logout</button>
+            </div>
+            <div class="col-8">
+                <form [formGroup]="searchForm" (ngSubmit)="search()">
+                    <div class="form-group" style="float: right;">
+                        <input type="text" id="searchText" class="form-control" style="width: 200px; display: inline;" [formControlName]="'searchText'"
+                                name="searchText" placeholder="Search" autofocus>
+                            <button type="submit" class="btn btn-success" style="margin-left: 20px;">
+                                <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                            </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <i class="fa-solid fa-bars fa-2xl bars-menu-btn"></i>
+    </div>
+</div>
+<div class="search-results" *ngIf="searchResults">
+    <button class="btn btn-secondary cancel-search-btn" (click)="cancelSearch()"><i class="fa-solid fa-angles-left"></i></button>
+</div> -->

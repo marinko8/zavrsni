@@ -1,0 +1,101 @@
+<app-header></app-header>
+<div class="container" style="margin-top: 10vh;">
+    <div *ngFor="let league of leaguesMap | keyvalue" class="league-container card">
+        <div class="league-header">
+            <img src="{{league.value[0].league?.logo}}" alt="league-image" class="logo">
+            <p>{{league.value[0].league?.name}}</p>
+        </div>
+        <div *ngFor="let match of league.value" class="row match-container">
+            <div class="col-2 period-container">
+                <span>{{match?.status?.elapsed}}'</span>
+            </div>
+            <div class="col-8 teams-container">
+                <div class="row team">
+                    <div class="col-9 team-info">
+                        <img src="{{match.teams?.home?.logo}}" alt="league-image" class="logo">
+                        <span>{{match.teams?.home?.name}}</span>
+                    </div>
+                    <div class="col-3 goals">
+                        <span>{{match?.goals?.home}}</span>
+                    </div>
+                </div>
+                <div class="row team">
+                    <div class="col-9 team-info">
+                        <img src="{{match.teams?.away?.logo}}" alt="league-image" class="logo">
+                        <span>{{match.teams?.away?.name}}</span>
+                    </div>
+                    <div class="col-3 goals">
+                        <span>{{match?.goals?.away}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 row bet-controls">
+                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[0].value)" style="border-right: 1px solid;">
+                    <div class="bet-value">
+                        <span>{{match.winnerOdds!.values[0].value}}</span>
+                    </div>
+                    <div class="bet-odd">
+                        <span>{{match.winnerOdds!.values[0].odd}}</span>
+                    </div>
+                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[0].value == match.winnerOdds?.selected}"></div>
+                </div>
+                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[1].value)" style="border-right: 1px solid;">
+                    <div class="bet-value">
+                        <span>{{match.winnerOdds!.values[1].value}}</span>
+                    </div>
+                    <div class="bet-odd">
+                        <span>{{match.winnerOdds!.values[1].odd}}</span>
+                    </div>
+                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[1].value == match.winnerOdds?.selected}"></div>
+                </div>
+                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[2].value)">
+                    <div class="bet-value">
+                        <span>{{match.winnerOdds!.values[2].value}}</span>
+                    </div>
+                    <div class="bet-odd">
+                        <span>{{match.winnerOdds!.values[2].odd}}</span>
+                    </div>
+                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[2].value == match.winnerOdds?.selected}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="betsPlaced.length > 0" class="placed-bets-container">
+    <div class="container card bets-content">
+        <div *ngFor="let bet of betsPlaced; index as i" class="row bet-row-container">
+            <div class="col-7 bet-match-info">
+                <span>{{bet.teams?.home?.name}}</span>
+                <span> VS </span>
+                <span>{{bet.teams?.away?.name}}</span>
+            </div>
+            <div class="col-2" style="border-right: 1px solid gray;">
+                <span>{{bet.odd}}</span>
+            </div>
+            <div class="col-1">
+                <span>{{bet.value}}</span>
+            </div>
+            <div class="col-2 remove-btn-container">
+                <button class="btn btn-danger" (click)="removeByIndex(i)">Remove</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row points-input form-group">
+            <div class="col-12 col-md-4">
+                <label for="points-betting col-form-label">Points:</label>
+                <input type="number" name="points-betting" [(ngModel)]="betPoints" class="form-control">
+            </div>
+        </div>
+        <div class="row odds-sum">
+            <p>Odds: {{oddsSum  | number:'1.1-2'}}</p>
+        </div>
+        <div *ngIf="betPoints" class="row win-prize">
+            <p>Points to win: {{betPoints * oddsSum | number:'1.1-2'}}</p>
+        </div>
+        <div class="bet-buttons-container">
+            <button class="btn btn-success" (click)="confirm()" style="margin-right: 20px;">Confirm</button>
+            <button class="btn btn-danger" (click)="removeAll()">Remove all</button>
+        </div>
+    </div>
+</div>

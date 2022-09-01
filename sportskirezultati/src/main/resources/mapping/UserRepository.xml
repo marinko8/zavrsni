@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sportskirezultati.domain.user.UserRepository">
+  <resultMap id="userResultMap" type="com.sportskirezultati.domain.user.User">
+    <id column="user_id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="email" property="email"/>
+    <result column="password" property="password"/>
+    <result column="role" property="role"/>
+    <result column="disabled_indicator" property="disabledIndicator"/>
+  </resultMap>
+
+  <select id="findByUsername" parameterType="String" resultMap="userResultMap">
+    SELECT user_id,
+           username,
+           email,
+           password,
+           role,
+           disabled_indicator
+      FROM users u
+     WHERE u.username = #{username}
+  </select>
+
+  <select id="findById" parameterType="Long" resultMap="userResultMap">
+    SELECT user_id,
+           username,
+           email,
+           password,
+           role,
+           disabled_indicator
+    FROM users u
+    WHERE u.user_id = #{userId}
+  </select>
+
+  <select id="isUsernameTaken" parameterType="String" resultType="Integer">
+    SELECT COUNT(*)
+    FROM users u
+    WHERE u.username = #{username}
+  </select>
+
+  <select id="isEmailTaken" parameterType="String" resultType="Integer">
+    SELECT COUNT(*)
+    FROM users u
+    WHERE u.email = #{email}
+  </select>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO users (username,
+                       email,
+                       password,
+                       role,
+                       disabled_indicator
+    )
+    VALUES (#{username, jdbcType=VARCHAR},
+            #{email, jdbcType=VARCHAR},
+            #{password, jdbcType=VARCHAR},
+            #{role, jdbcType=CHAR},
+            #{disabledIndicator, jdbcType=CHAR})
+  </insert>
+</mapper>

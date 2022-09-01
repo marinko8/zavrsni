@@ -1,0 +1,77 @@
+<app-header></app-header>
+<div class="container user-info-container">
+    <div class="row">
+        <div class="col-12 col-md-2" style="display: flex; justify-content: center;">
+            <div class="user-picture">
+                <span>{{userDetails?.initials}}</span>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Name</p>
+            <p>{{userDetails?.name}}</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Surname</p>
+            <p>{{userDetails?.surname}}</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Username</p>
+            <p>{{userDetails?.username}}</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Points</p>
+            <p>{{userDetails?.points}}</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Games</p>
+            <p>{{userDetails?.numberOfGames}}</p>
+        </div>
+        <div class="col-0 col-md-2 info-box">
+            <button class="btn btn-success">Send a friend request</button>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Success</p>
+            <p>{{userDetails?.success}}%</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Friends</p>
+            <p>{{userDetails?.numberOfFriends}}</p>
+        </div>
+        <div class="col-6 col-md-2 info-box">
+            <p class="info-title">Bankrupt times</p>
+            <p>{{userDetails?.bankrupt}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header">
+          Last games
+        </div>
+
+       <div *ngFor="let bet of userDetails?.bets" class="row" style="margin: 10px 10px;">
+        <div class="col-3 col-sm-2">
+            <span>{{bet.date}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{bet.winningBets}}/{{bet.betsCount}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{bet.totalOdd}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{bet.points}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{bet.pointsToWin}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <i *ngIf="bet.isActive" class="fa-sharp fa-solid fa-circle" style="color: green;"></i>
+            <i *ngIf="!bet.isActive && bet.winningBets == bet.betsCount" class="fa-solid fa-check" style="color: green;"></i>
+            <i *ngIf="!bet.isActive && bet.winningBets != bet.betsCount" class="fa-solid fa-circle-xmark" style="color: red;"></i>
+        </div>
+        <hr>
+       </div> 
+    </div>
+</div>

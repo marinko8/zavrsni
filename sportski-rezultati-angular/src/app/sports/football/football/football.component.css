@@ -1,0 +1,156 @@
+:host {
+    display: block;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url("../../../../assets/images/home-background.jpg");
+    background-size: cover;
+}
+
+.league-container {
+    width: 100%;
+    margin-bottom: 3vh;
+}
+
+.league-header {
+    display: flex;
+    align-items: center;
+    background-color: rgb(90, 104, 117);
+    width: 100%;
+}
+
+.league-header p {
+    margin: 5px 0;
+}
+
+.league-container p {
+    padding-left: 3vw;
+    font-size: 25px;
+    color: aliceblue;
+}
+
+.match-container {
+    width: 100%;
+    height: 60px;
+    margin: 0 0 10px 0;
+}
+
+.period-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(61, 61, 61);
+}
+
+.period-container span {
+    color: aliceblue;
+}
+
+.teams-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.team {
+    width: 100%;
+    height: 50%;
+}
+
+.team-info {
+    border-right: 1px solid rgb(78, 78, 78);
+}
+
+.bet-value {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bet-odd {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.bet-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(123, 212, 150);
+    margin: 0;
+    padding: 0;
+}
+
+.bet-option {
+    padding: 0;
+}
+
+.choosen-indicator {
+    width: 100%;
+    height: 5px;
+}
+
+.choosen {
+    background-color: rgb(36, 67, 153);
+}
+
+.placed-bets-container {
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0%;
+    opacity: 0.9;
+}
+
+.placed-bets-container span, .placed-bets-container p, .placed-bets-container label{
+    font-size: 18px;
+    color: black;
+}
+
+.bets-content {
+    background-color: rgb(183, 223, 223);
+}
+
+.bet-match-info {
+    border-right: 1px solid gray;
+}
+
+.bet-row-container {
+    margin: 10px 0;
+}
+
+.remove-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.points-input {
+    margin: 20px 0px;
+}
+
+.odds-sum {
+    margin: 20px 0px;
+}
+
+.win-prize {
+    margin-bottom: 30px;
+}
+
+.win-prize p {
+    font-size: 20px;
+}
+
+.bet-buttons-container {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.logo {
+    width: 25px;
+    height: auto;
+    margin: 10px;
+}

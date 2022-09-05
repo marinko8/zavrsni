@@ -13,8 +13,9 @@ import { FootballComponent } from './sports/football/football/football.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { authInterceptorProviders } from './common/auth.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor, authInterceptorProviders } from './common/auth.interceptor';
+import { AuthenticationGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { authInterceptorProviders } from './common/auth.interceptor';
     FormsModule,
     HttpClientModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [AuthenticationGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

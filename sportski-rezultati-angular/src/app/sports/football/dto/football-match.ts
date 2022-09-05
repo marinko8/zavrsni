@@ -7,7 +7,7 @@ import { TeamsDto } from "./teams-dto";
 export class FootballMatch {
     id: Number | undefined;
     type: String | undefined;
-    date: Number | undefined;
+    date: Date | undefined;
     teams: TeamsDto | undefined;
     league: LeagueDto | undefined;
   

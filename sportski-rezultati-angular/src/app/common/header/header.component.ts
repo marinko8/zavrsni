@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/auth/storage.service';
 import { BasicUserInfoDto } from 'src/app/dto/basic-user-info-dto';
 import { SearchService } from '../search.service';
 
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
   
   userId?: number = 5;
 
-  constructor(private searchService: SearchService, private router: Router) { }
+  constructor(private searchService: SearchService, private router: Router, private storageService: StorageService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +33,11 @@ export class HeaderComponent implements OnInit {
       return;
     }
 
-    this.searchUsers = this.searchService.search(this.searchForm.get('searchText')?.value);
+    this.searchService.search(this.searchForm.get('searchText')?.value).subscribe({
+      next: (res) => this.searchUsers = res,
+      error: (e) => this.searchUsers = []
+    })
+
     this.searchUsers.forEach(u => u.initials = u.name!.substring(0, 1) + u.surname!.substring(0, 1))
     this.searchResults = true;
   }
@@ -56,5 +61,10 @@ export class HeaderComponent implements OnInit {
     }
     
     this.router.navigateByUrl('/profile/' + userId);
+  }
+
+  logout() {
+    this.storageService.signOut();
+    this.router.navigateByUrl('');
   }
 }

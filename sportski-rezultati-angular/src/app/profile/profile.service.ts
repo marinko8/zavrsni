@@ -107,6 +107,7 @@ export class ProfileService {
       name: "Niko",
       surname: "Horvat",
       username: "nHorvat",
+      role: "USER",
       points: 3648,
       bankrupt: 1,
       success: 41,

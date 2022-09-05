@@ -25,19 +25,24 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigateByUrl('/football');
-    // this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('username')?.value).subscribe(res => {
-      
-    //   if (res.status == 200) {
-    //     this.storageService.saveToken(res.accessToken);
-    //     this.storageService.saveRefreshToken(res.refreshToken);
-    //     this.storageService.saveUser(res);
+    // this.router.navigateByUrl('/football');
+    this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe({
+      next: (res) => this.handleSuccessLogin(res),
+      error: (e) => this.handleError(e)
+    });
+  }
 
-    //     this.router.navigateByUrl('/football');
-    //   } else {
-        
-    //   }
-    // })
+  handleSuccessLogin(res: any) {
+    this.storageService.saveToken(res.jwtToken);
+    this.storageService.saveRefreshToken(res.refreshToken);
+    this.storageService.saveUser(res);
+    console.log(this.storageService.getUser().username);
+
+    this.router.navigateByUrl('/football');
+  }
+
+  handleError(error: any) {
+    console.log("ne");
   }
 
 }

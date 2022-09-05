@@ -1,5 +1,5 @@
 export class BetSummary {
-    date: String | undefined;
+    date: Date | undefined;
     betsCount: Number | undefined;
     winningBets: Number | undefined;
     totalOdd: Number | undefined;

@@ -21,11 +21,11 @@ export class FootballComponent implements OnInit {
   constructor(private footballService: FootballService) { }
 
   ngOnInit(): void {
-    this.matchesResponse = this.footballService.getFootballMatchesForToday();
-    this.leaguesMap = this.footballService.convertMatchesToMap(this.matchesResponse.events);
-    if(this.matchesResponse.events[0].goals) {
-      this.matchesResponse.events[0].goals.home = 3;
-    }
+    this.footballService.getFootballMatchesForToday().subscribe({
+      next: (res) => this.handleSuccessFetch(res),
+      error: (e) => console.log("Dogodila se pogreška prilikom dohvata podataka")
+      
+    });
   }
 
   chooseWinner(fixtureId?: Number, value?: String) {
@@ -44,6 +44,7 @@ export class FootballComponent implements OnInit {
         fixtureId: match.id,
         teams: match.teams,
         leagueId: match.league?.id,
+        type: "01",
         odd: odd,
         value: value
       });
@@ -96,5 +97,11 @@ export class FootballComponent implements OnInit {
     });
 
     this.oddsSum = odds;
+  }
+
+  handleSuccessFetch(res: any) {
+    this.matchesResponse = res;
+    
+    this.leaguesMap = this.footballService.convertMatchesToMap(this.matchesResponse?.events);
   }
 }

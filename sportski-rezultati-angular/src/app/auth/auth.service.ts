@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,7 +18,7 @@ export class AuthService {
 
 
   login(username: string | any, password: string | any): Observable<any> {
-    return this.httpClient.post(environment.baseUrl + '/api/auth/signin', {
+    return this.httpClient.post<HttpResponse<any>>(environment.baseUrl + '/api/auth/signin', {
       username,
       password
     }, httpOptions);
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   refreshToken(token: string) {
-    return this.httpClient.post(environment.baseUrl + '/api/auth/refreshtoken', {
+    return this.httpClient.post<HttpResponse<any>>(environment.baseUrl + '/api/auth/refreshtoken', {
       refreshToken: token
     }, httpOptions);
   }

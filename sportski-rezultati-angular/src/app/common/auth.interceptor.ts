@@ -39,17 +39,17 @@ export class AuthInterceptor implements HttpInterceptor {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
-      const token = this.storageService.getRefreshToken();
+      const refreshToken = this.storageService.getRefreshToken();
 
-      if (token)
-        return this.authService.refreshToken(token).pipe(
+      if (refreshToken)
+        return this.authService.refreshToken(refreshToken).pipe(
           switchMap((token: any) => {
             this.isRefreshing = false;
 
-            this.storageService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
+            this.storageService.saveToken(token.jwtToken);
+            this.refreshTokenSubject.next(token.jwtToken);
             
-            return next.handle(this.addTokenHeader(request, token.accessToken));
+            return next.handle(this.addTokenHeader(request, token.jwtToken));
           }),
           catchError((err) => {
             this.isRefreshing = false;
@@ -68,11 +68,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
-    /* for Spring Boot back-end */
-    // return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-
-    /* for Node.js Express back-end */
-    return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
+    return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
   }
 }
 

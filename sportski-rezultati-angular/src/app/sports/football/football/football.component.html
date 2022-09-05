@@ -7,12 +7,14 @@
         </div>
         <div *ngFor="let match of league.value" class="row match-container">
             <div class="col-2 period-container">
-                <span>{{match?.status?.elapsed}}'</span>
+                <span *ngIf="!match.isLive && !match.isOver">{{match?.date | date:'HH:mm'}}</span>
+                <span *ngIf="match.isLive">{{match?.status?.elapsed}}'</span>
+                <span *ngIf="match.isOver">Finished</span>
             </div>
             <div class="col-8 teams-container">
                 <div class="row team">
                     <div class="col-9 team-info">
-                        <img src="{{match.teams?.home?.logo}}" alt="league-image" class="logo">
+                        <img src="{{match.teams?.home?.logo}}" alt="team-image" class="logo">
                         <span>{{match.teams?.home?.name}}</span>
                     </div>
                     <div class="col-3 goals">
@@ -21,7 +23,7 @@
                 </div>
                 <div class="row team">
                     <div class="col-9 team-info">
-                        <img src="{{match.teams?.away?.logo}}" alt="league-image" class="logo">
+                        <img src="{{match.teams?.away?.logo}}" alt="team-image" class="logo">
                         <span>{{match.teams?.away?.name}}</span>
                     </div>
                     <div class="col-3 goals">
@@ -29,33 +31,35 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2 row bet-controls">
-                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[0].value)" style="border-right: 1px solid;">
-                    <div class="bet-value">
-                        <span>{{match.winnerOdds!.values[0].value}}</span>
+            <div class="col-2">
+                <div *ngIf="match.winnerOdds" class=" row bet-controls">
+                    <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[0].value)" style="border-right: 1px solid;">
+                        <div class="bet-value">
+                            <span>{{match.winnerOdds!.values[0].value}}</span>
+                        </div>
+                        <div class="bet-odd">
+                            <span>{{match.winnerOdds!.values[0].odd}}</span>
+                        </div>
+                        <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[0].value == match.winnerOdds.selected}"></div>
                     </div>
-                    <div class="bet-odd">
-                        <span>{{match.winnerOdds!.values[0].odd}}</span>
+                    <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[1].value)" style="border-right: 1px solid;">
+                        <div class="bet-value">
+                            <span>{{match.winnerOdds!.values[1].value}}</span>
+                        </div>
+                        <div class="bet-odd">
+                            <span>{{match.winnerOdds!.values[1].odd}}</span>
+                        </div>
+                        <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[1].value == match.winnerOdds.selected}"></div>
                     </div>
-                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[0].value == match.winnerOdds?.selected}"></div>
-                </div>
-                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[1].value)" style="border-right: 1px solid;">
-                    <div class="bet-value">
-                        <span>{{match.winnerOdds!.values[1].value}}</span>
+                    <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[2].value)">
+                        <div class="bet-value">
+                            <span>{{match.winnerOdds!.values[2].value}}</span>
+                        </div>
+                        <div class="bet-odd">
+                            <span>{{match.winnerOdds!.values[2].odd}}</span>
+                        </div>
+                        <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[2].value == match.winnerOdds.selected}"></div>
                     </div>
-                    <div class="bet-odd">
-                        <span>{{match.winnerOdds!.values[1].odd}}</span>
-                    </div>
-                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[1].value == match.winnerOdds?.selected}"></div>
-                </div>
-                <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[2].value)">
-                    <div class="bet-value">
-                        <span>{{match.winnerOdds!.values[2].value}}</span>
-                    </div>
-                    <div class="bet-odd">
-                        <span>{{match.winnerOdds!.values[2].odd}}</span>
-                    </div>
-                    <div class="choosen-indicator" [ngClass]="{'choosen': match.winnerOdds!.values[2].value == match.winnerOdds?.selected}"></div>
                 </div>
             </div>
         </div>

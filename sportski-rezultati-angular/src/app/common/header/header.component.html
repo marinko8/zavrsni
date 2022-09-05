@@ -10,7 +10,7 @@
             <button (click)="loadMyProfile()" class="btn btn-primary header-btn" style="display: inline;">
                 My profile <span class="badge badge-light">{{activeBets}}</span>
             </button>
-            <button class="btn btn-danger header-btn" style="display: inline;">Logout</button>
+            <button (click)="logout()" class="btn btn-danger header-btn" style="display: inline;">Logout</button>
         </div>
         <div class="col-12 col-md-5 search-container">
             <form [formGroup]="searchForm" (ngSubmit)="search()">

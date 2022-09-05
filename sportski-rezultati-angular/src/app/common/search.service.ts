@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { BasicUserInfoDto } from '../dto/basic-user-info-dto';
 
 @Injectable({
@@ -6,21 +9,9 @@ import { BasicUserInfoDto } from '../dto/basic-user-info-dto';
 })
 export class SearchService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  search(text: string | undefined | null): Array<BasicUserInfoDto> {
-    if(!text) {
-      return [];
-    }
-
-    let user1: BasicUserInfoDto = {id: 1,
-                                  name: "Petar",
-                                  surname: "Horvat",
-                                  username: "pHorvat"};
-    let user2: BasicUserInfoDto = {id: 2,
-                                  name: "Niko",
-                                  surname: "Horvat",
-                                  username: "nHorvat"}
-    return[user1, user2];
+  search(text: string | undefined | null): Observable<Array<BasicUserInfoDto>> {
+    return this.httpClient.get<Array<BasicUserInfoDto>>(environment.baseUrl + "/api/search?=" + text);
   }
 }

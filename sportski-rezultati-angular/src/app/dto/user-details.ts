@@ -5,6 +5,7 @@ export class UserDetails {
     name: String | undefined;
     surname: String | undefined;
     username: String | undefined;
+    role: String | undefined;
     initials?: String | undefined;
     points: Number | undefined;
     bankrupt: Number | undefined;

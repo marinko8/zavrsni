@@ -10,7 +10,7 @@ import com.sportskirezultati.external.rapid.dto.LiveOddsItemDto;
 import com.sportskirezultati.external.rapid.dto.LiveOddsResponseDto;
 import com.sportskirezultati.external.rapid.dto.OddsItemDto;
 import com.sportskirezultati.external.rapid.dto.OddsResponseDto;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,14 +50,14 @@ public class FootballEventMapper {
   }
 
   private static boolean isLive(FixtureItemDto fixtureItem) {
-    return fixtureItem.getFixture().getDate().isBefore(LocalDateTime.now())
+    return fixtureItem.getFixture().getDate().isBefore(Instant.now())
         && fixtureItem.getFixture().getStatus().getShortName() != null
         && !Constants.FOOTBALL_STATUS_FT.equals(
         fixtureItem.getFixture().getStatus().getShortName());
   }
 
   private static boolean isOver(FixtureItemDto fixtureItem) {
-    return fixtureItem.getFixture().getDate().isBefore(LocalDateTime.now())
+    return fixtureItem.getFixture().getDate().isBefore(Instant.now())
         && fixtureItem.getFixture().getStatus().getShortName() != null
         && Constants.FOOTBALL_STATUS_FT.equals(
         fixtureItem.getFixture().getStatus().getShortName());

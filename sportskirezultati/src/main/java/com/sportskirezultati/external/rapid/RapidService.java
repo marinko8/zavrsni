@@ -11,7 +11,7 @@ public interface RapidService {
 
   FixtureResponseDto getFixtures(LocalDate date);
 
-  OddsResponseDto getOddsByDate(LocalDate date);
+  OddsResponseDto getOddsByDateAndLeague(Integer leagueId, LocalDate date);
 
   LiveOddsResponseDto getLiveOdds();
 

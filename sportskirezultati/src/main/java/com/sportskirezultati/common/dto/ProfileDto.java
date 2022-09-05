@@ -1,29 +1,39 @@
 package com.sportskirezultati.common.dto;
 
+import java.time.LocalDate;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Dto for user profile view.
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProfileDto {
 
-  private BasicUserInfoDto basicInfo;
+  private Long id;
+  private String name;
+  private String surname;
+  private String username;
+  private String role;
 
-  private Integer numberOfBets;
   private Double points;
-  private Integer bankrupts;
-
+  private Integer bankrupt;
+  private Integer success;
+  private Integer numberOfGames;
   private Integer numberOfFriends;
 
-  private boolean requestSent;
-  private boolean requestReceived;
+  private Boolean isFriend;
+  private Boolean requestSended;
+  private Boolean requestReceived;
 
-  private List<BetViewDto> lastFinishedBets;
+  private Boolean banned;
+  private LocalDate bannedToDate;
 
-  private List<BetViewDto> activeBets;
-  private List<BasicUserInfoDto> friendRequests;
+  private List<BetViewDto> bets;
 }

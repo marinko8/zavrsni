@@ -8,8 +8,7 @@ import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
-// const TOKEN_HEADER_KEY = 'Authorization';        // for Spring Boot back-end
-const TOKEN_HEADER_KEY = 'x-access-token';          // for Node.js Express back-end
+const TOKEN_HEADER_KEY = 'Authorization';        // for Spring Boot back-end
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,6 +20,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object> | any> {
     let authReq = req;
     const token = this.storageService.getToken();
+    console.log("jwt: " + token);
+    
     if (token != null) {
       authReq = this.addTokenHeader(req, token);
     }

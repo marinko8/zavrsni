@@ -1,6 +1,6 @@
 package com.sportskirezultati.domain.bet;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,9 +13,9 @@ public class Bet {
 
   private Long id;
   private Long userId;
-  private Integer points;
+  private Double points;
   private Double prize;
   private Double odd;
   private String winnerIndicator;
-  private LocalDateTime tstamp;
+  private Instant tstamp;
 }

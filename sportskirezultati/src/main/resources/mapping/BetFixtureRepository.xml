@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sportskirezultati.domain.betfixtures.BetFixtureRepository">
+  <resultMap id="betFixtureResultMap" type="com.sportskirezultati.domain.betfixtures.BetFixture">
+    <id column="bet_fixtures_id" property="id"/>
+    <result column="bet_id" property="betId"/>
+    <result column="sport_code" property="sportCode"/>
+    <result column="event" property="event"/>
+    <result column="odd" property="odd"/>
+    <result column="bet_type" property="betType"/>
+    <result column="option" property="option"/>
+    <result column="correct" property="correct"/>
+  </resultMap>
+
+  <select id="findById" parameterType="Long" resultMap="betFixtureResultMap">
+    SELECT *
+      FROM bet_fixtures
+     WHERE bet_fixtures_id = #{betFixtureId}
+  </select>
+
+  <select id="findByBetId" parameterType="Long" resultMap="betFixtureResultMap">
+    SELECT *
+    FROM bet_fixtures
+    WHERE bet_id = #{betId}
+  </select>
+
+  <update id="update">
+    UPDATE bet_fixtures
+       SET bet_id = #{betFixture.betId},
+           sport_code = #{betFixture.sportCode},
+           event = #{betFixture.event},
+           odd = #{betFixture.betId},
+           bet_type = #{betFixture.betType},
+           option = #{betFixture.option},
+           correct = #{betFixture.correct}
+     WHERE bet_fixtures_id = #{betFixture.id}
+  </update>
+
+  <delete id="delete">
+    DELETE
+      FROM bet_fixtures
+     WHERE bet_fixtures_id = #{betFixtureId}
+  </delete>
+
+  <delete id="deleteByBetId">
+    DELETE
+      FROM bet_fixtures
+     WHERE bet_id = #{betId}
+  </delete>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO bet_fixtures (bet_id,
+                              sport_code,
+                              event,
+                              odd,
+                              bet_type,
+                              option,
+                              correct
+    )
+    VALUES (#{betId, jdbcType=BIGINT},
+            #{sportCode, jdbcType=CHAR},
+            #{event, jdbcType=BIGINT},
+            #{odd, jdbcType=DECIMAL},
+            #{betType, jdbcType=VARCHAR},
+            #{option, jdbcType=VARCHAR},
+            #{correct, jdbcType=CHAR})
+  </insert>
+</mapper>

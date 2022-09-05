@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from 'src/app/auth/storage.service';
 import { FootballMatch } from '../dto/football-match';
 import { FootballResponse } from '../dto/football-response';
 import { PlacedBetDto } from '../dto/placed-bet-dto';
@@ -13,14 +14,16 @@ export class FootballComponent implements OnInit {
   matchesResponse: FootballResponse | undefined;
   leaguesMap: Map<Number, Array<FootballMatch>> = new Map();
 
+  userPoints: number = 0
   betPoints: number = 0;
   oddsSum: number = 0;
 
   betsPlaced: Array<PlacedBetDto> = [];
 
-  constructor(private footballService: FootballService) { }
+  constructor(private footballService: FootballService, private storageService: StorageService) { }
 
   ngOnInit(): void {
+    this.userPoints = this.storageService.getUser().points;
     this.footballService.getFootballMatchesForToday().subscribe({
       next: (res) => this.handleSuccessFetch(res),
       error: (e) => console.log("Dogodila se pogreška prilikom dohvata podataka")
@@ -85,7 +88,17 @@ export class FootballComponent implements OnInit {
   }
 
   confirm() {
-
+    this.footballService.setNewBet(this.betsPlaced, this.betPoints, this.oddsSum).subscribe({
+      next: (res) => {
+        this.removeAll();
+        this.userPoints = this.userPoints - this.betPoints;
+        let user = this.storageService.getUser();
+        user.points = this.userPoints;
+        this.storageService.saveUser(user);
+      },
+      error: (e) => console.log("Greška prilikom postavljanja nove igre")
+      
+    })
   }
 
   calculateOdds() {

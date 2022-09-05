@@ -24,5 +24,5 @@ public interface RefreshTokenRepository {
   /**
    * Save new refresh token.
    */
-  RefreshToken save(@Param("refreshToken") RefreshToken refreshToken);
+  int save(RefreshToken refreshToken);
 }

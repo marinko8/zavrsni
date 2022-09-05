@@ -1,7 +1,6 @@
 package com.sportskirezultati.domain.friendrequest;
 
 import com.sportskirezultati.common.dto.BasicUserInfoDto;
-import com.sportskirezultati.domain.userinfo.UserInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class FriendRequestServiceImpl implements FriendRequestService {
 
-  private FriendRequestRepository repository;
+  private final FriendRequestRepository repository;
 
   @Override
   public List<BasicUserInfoDto> getRequestsForUser(Long userId) {
@@ -38,15 +37,9 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
   @Override
   @Transactional
-  public void deleteByUserSending(Long userId) {
-    repository.deleteByUserSending(userId);
-    log.info("Deleted friends request with user sending id: {}", userId);
-  }
-
-  @Override
-  @Transactional
-  public void deleteByUserReceiving(Long userId) {
-    repository.deleteByUserReceiving(userId);
-    log.info("Deleted friends request with user receiving id: {}", userId);
+  public void delete(Long userSending, Long userReceiving) {
+    repository.delete(userSending, userReceiving);
+    log.info("Deleted friends request with user sending id: {} and user receiving id: {}",
+        userSending, userReceiving);
   }
 }

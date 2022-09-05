@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.bet;
 
+import com.sportskirezultati.common.dto.BetViewDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,6 +27,15 @@ public interface BetRepository {
    * Returns all unfinished bets.
    */
   List<Bet> findAllUnfinishedBets();
+
+  Integer countByUserId(@Param("userId") Long userId);
+
+  Integer countWinnersByUserId(@Param("userId") Long userId);
+
+  List<BetViewDto> getActiveBets(@Param("userId") Long userId);
+
+  List<BetViewDto> getLastFinishedBets(@Param("userId") Long userId,
+      @Param("betCount") Integer betCount);
 
   /**
    * Save new entity.

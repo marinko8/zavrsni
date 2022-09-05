@@ -31,13 +31,15 @@ public class RapidServiceImpl implements RapidService {
   private final RestTemplate restTemplate;
   private final AppProperties appProperties;
 
-  private static final String FIXTURE_URL = "/fixtures/";
+  private static final String FIXTURE_URL = "/fixtures";
   private static final String ODDS_URL = "/odds/";
   private static final String LIVE_ODDS = ODDS_URL + "/live/";
 
   private static final String DATE_PARAM = "date";
   private static final String ID_PARAM = "id";
   private static final String BET_PARAM = "bet";
+  private static final String LEAGUE_PARAM = "league";
+  private static final String SEASON_PARAM = "season";
 
   @Override
   public FixtureResponseDto getFixtureById(Long id) {
@@ -63,9 +65,11 @@ public class RapidServiceImpl implements RapidService {
   }
 
   @Override
-  public OddsResponseDto getOddsByDate(LocalDate date) {
+  public OddsResponseDto getOddsByDateAndLeague(Integer leagueId, LocalDate date) {
     Map<String, String> params = new HashMap<>();
     params.put(DATE_PARAM, date.toString());
+    params.put(LEAGUE_PARAM, leagueId.toString());
+    params.put(SEASON_PARAM, String.valueOf(date.getYear()));
 
     return getOdds(params);
   }
@@ -103,7 +107,7 @@ public class RapidServiceImpl implements RapidService {
     MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
     params.forEach(queryParams::set);
 
-    return UriComponentsBuilder.fromPath(appProperties.getRapidBaseUrl() + url)
+    return UriComponentsBuilder.fromHttpUrl(appProperties.getRapidBaseUrl() + url)
         .queryParams(queryParams).toUriString();
   }
 

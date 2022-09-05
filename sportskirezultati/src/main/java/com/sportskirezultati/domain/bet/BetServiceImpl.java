@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.bet;
 
+import com.sportskirezultati.common.dto.BetViewDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class BetServiceImpl implements BetService {
 
-  private BetRepository repository;
+  private final BetRepository repository;
 
   @Override
   public Bet getById(Long betId) {
@@ -28,6 +29,26 @@ public class BetServiceImpl implements BetService {
 
   public List<Bet> getAllUnfinishedBets() {
     return repository.findAllUnfinishedBets();
+  }
+
+  @Override
+  public Integer countByUserId(Long userId) {
+    return repository.countByUserId(userId);
+  }
+
+  @Override
+  public Integer countWinnersByUserId(Long userId) {
+    return repository.countWinnersByUserId(userId);
+  }
+
+  @Override
+  public List<BetViewDto> getActiveBets(Long userId) {
+    return repository.getActiveBets(userId);
+  }
+
+  @Override
+  public List<BetViewDto> getLastFinishedBets(Long userId, Integer betCount) {
+    return repository.getLastFinishedBets(userId, betCount);
   }
 
 

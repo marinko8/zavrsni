@@ -1,7 +1,7 @@
 package com.sportskirezultati.domain.friends;
 
-import com.sportskirezultati.common.dto.BasicUserInfoDto;
-import org.apache.ibatis.annotations.Param;
+import com.sportskirezultati.auth.UserDetailsImpl;
+import com.sportskirezultati.common.dto.BusinessResponse;
 
 /**
  * Service for {@link Friends}.
@@ -9,14 +9,11 @@ import org.apache.ibatis.annotations.Param;
 public interface FriendsService {
 
   /**
-   * Returns all user friends.
-   */
-  BasicUserInfoDto findAllFriendsForUser(Long userId);
-
-  /**
    * Returns number of user friends.
    */
   Integer countUserFriends(Long userId);
+
+  Friends findFriendship(Long userOne, Long userTwo);
 
   /**
    * Save new entity.
@@ -27,5 +24,15 @@ public interface FriendsService {
   /**
    * Delete friends record.
    */
-  void delete(@Param("userOneId") Long userOneId, @Param("userTwoId") Long userTwoId);
+  void delete(Long userOneId, Long userTwoId);
+
+  BusinessResponse addFriend(UserDetailsImpl userDetails, Long userId);
+
+  BusinessResponse removeRequest(UserDetailsImpl userDetails, Long userId);
+
+  BusinessResponse acceptRequest(UserDetailsImpl userDetails, Long userId);
+
+  BusinessResponse declineRequest(UserDetailsImpl userDetails, Long userId);
+
+  BusinessResponse removeFriend(UserDetailsImpl userDetails, Long userId);
 }

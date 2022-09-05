@@ -32,10 +32,5 @@ public interface FriendRequestRepository {
   /**
    * Delete by user sending.
    */
-  int deleteByUserSending(@Param("userId") Long userId);
-
-  /**
-   * Delete by user receiving.
-   */
-  int deleteByUserReceiving(@Param("userId") Long userId);
+  int delete(@Param("userSending") Long userSending, @Param("userReceiving") Long userReceiving);
 }

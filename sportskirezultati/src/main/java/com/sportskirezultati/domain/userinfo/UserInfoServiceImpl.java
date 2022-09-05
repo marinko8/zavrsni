@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.userinfo;
 
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class UserInfoServiceImpl implements UserInfoService {
   }
 
   @Override
-  public List<UserInfo> search(String searchText) {
+  public List<BasicUserInfoDto> search(String searchText) {
     return repository.search(searchText);
   }
 

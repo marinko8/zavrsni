@@ -6,8 +6,10 @@ import com.sportskirezultati.config.AppProperties;
 import com.sportskirezultati.external.rapid.RapidService;
 import com.sportskirezultati.external.rapid.dto.FixtureResponseDto;
 import com.sportskirezultati.external.rapid.dto.LiveOddsResponseDto;
+import com.sportskirezultati.external.rapid.dto.OddsItemDto;
 import com.sportskirezultati.external.rapid.dto.OddsResponseDto;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +37,19 @@ public class FetchFootballDataServiceImpl implements FetchFootballDataService {
   @Override
   public EventsDto fetchFootballMatches(LocalDate date) {
     FixtureResponseDto fixtures = rapidService.getFixtures(date);
-    OddsResponseDto preMatchOdds = rapidService.getOddsByDate(date);
     LiveOddsResponseDto liveOdds = rapidService.getLiveOdds();
+
+    List<OddsItemDto> preGameOddsList = new ArrayList<>();
+
+    for (Integer leagueId : appProperties.getSupportedLeagues()) {
+      OddsResponseDto response = rapidService.getOddsByDateAndLeague(leagueId, date);
+
+      if (response != null && response.getResponse() != null) {
+        preGameOddsList.addAll(response.getResponse());
+      }
+    }
+
+    OddsResponseDto preMatchOdds = OddsResponseDto.builder().response(preGameOddsList).build();
 
     List<FootballMatch> events = fixtures.getResponse().stream()
         .filter(f -> appProperties.getSupportedLeagues().contains(f.getLeague().getId()))

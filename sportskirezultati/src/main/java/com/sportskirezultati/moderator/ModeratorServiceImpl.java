@@ -24,7 +24,7 @@ public class ModeratorServiceImpl implements ModeratorService {
 
   @Override
   @Transactional
-  public BusinessResponse banUser(Long userId, LocalDate toDate) {
+  public BusinessResponse banUser(Long userId) {
     UserInfo userInfo = userInfoService.getByUserId(userId);
 
     if (userInfo == null) {
@@ -33,30 +33,11 @@ public class ModeratorServiceImpl implements ModeratorService {
     }
 
     userInfo.setBannedIndicator(Constants.INDICATOR_YES.charAt(0));
-    userInfo.setBannedTo(toDate);
+    userInfo.setBannedTo(LocalDate.now().plusDays(10));
 
     userInfoService.update(userInfo);
 
-    log.info("User {} banned till {}", userId, toDate);
-
-    return new BusinessResponse(Collections.emptyList());
-  }
-
-  @Override
-  @Transactional
-  public BusinessResponse changeUserPoints(Long userId, Long points) {
-    UserInfo userInfo = userInfoService.getByUserId(userId);
-
-    if (userInfo == null) {
-      log.warn("User not found: {}", userId);
-      return new BusinessResponse(Collections.singletonList(ErrorMessages.USER_NOT_FOUND));
-    }
-
-    userInfo.setPoints(points.doubleValue());
-
-    userInfoService.update(userInfo);
-
-    log.info("Change points to user: {}", userId);
+    log.info("User {} banned till {}", userId, LocalDate.now().plusDays(10));
 
     return new BusinessResponse(Collections.emptyList());
   }

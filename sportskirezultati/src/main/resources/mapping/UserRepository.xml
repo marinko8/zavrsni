@@ -14,14 +14,18 @@
   </resultMap>
 
   <select id="findByUsername" parameterType="String" resultMap="userResultMap">
-    SELECT user_id,
-           username,
-           email,
-           password,
-           role,
-           disabled_indicator
-      FROM users u
-     WHERE u.username = #{username}
+      SELECT u.user_id as user_id,
+             username,
+             email,
+             password,
+             role,
+             disabled_indicator
+        FROM users u
+  INNER JOIN user_info ui
+          ON u.user_id = ui.user_id
+       WHERE u.username = #{username}
+         AND u.disabled_indicator = '0'
+         AND ui.banned_indicator = '0'
   </select>
 
   <select id="findById" parameterType="Long" resultMap="userResultMap">
@@ -31,20 +35,23 @@
            password,
            role,
            disabled_indicator
-    FROM users u
-    WHERE u.user_id = #{userId}
+      FROM users u
+     WHERE u.user_id = #{userId}
+       AND u.disabled_indicator = '0'
   </select>
 
   <select id="isUsernameTaken" parameterType="String" resultType="Integer">
     SELECT COUNT(*)
-    FROM users u
-    WHERE u.username = #{username}
+      FROM users u
+     WHERE u.username = #{username}
+       AND u.disabled_indicator = '0'
   </select>
 
   <select id="isEmailTaken" parameterType="String" resultType="Integer">
     SELECT COUNT(*)
-    FROM users u
-    WHERE u.email = #{email}
+      FROM users u
+     WHERE u.email = #{email}
+       AND u.disabled_indicator = '0'
   </select>
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">

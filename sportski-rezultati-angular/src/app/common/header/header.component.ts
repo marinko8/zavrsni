@@ -15,13 +15,12 @@ export class HeaderComponent implements OnInit {
     searchText: new FormControl('', Validators.required)
   });
 
-  activeBets: number = 2;
   searchResults = false;
   burgerMenuOpen = false;
 
   searchUsers: Array<BasicUserInfoDto> = [];
   
-  userId?: number = 5;
+  loggedInUserId?: number = 5;
 
   constructor(private searchService: SearchService, private router: Router, private storageService: StorageService) { }
 
@@ -52,7 +51,7 @@ export class HeaderComponent implements OnInit {
   }
 
   loadMyProfile() {
-    this.router.navigateByUrl('/profile/' + this.userId);
+    this.router.navigateByUrl('/profile/' + this.loggedInUserId);
   }
 
   loadUser(userId: Number | undefined) {

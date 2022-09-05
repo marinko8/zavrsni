@@ -19,8 +19,17 @@ export class ProfileComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.userDetails = this.profileService.getUserDetails(this.userId);
-    this.userDetails.initials = this.userDetails.name!.substring(0, 1) + this.userDetails.surname!.substring(0, 1)
+    console.log(this.userId);
+    
+    this.profileService.getUserDetails(this.userId).subscribe({
+      next: (res) => this.userDetails = res,
+      error: (e) => console.log("Greska prilikom dohvata podataka")
+      
+    })
+
+    if(this.userDetails) {
+      this.userDetails.initials = this.userDetails.name!.substring(0, 1) + this.userDetails.surname!.substring(0, 1)
+    }
   }
 
 }

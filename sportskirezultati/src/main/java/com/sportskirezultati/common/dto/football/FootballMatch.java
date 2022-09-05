@@ -6,7 +6,7 @@ import com.sportskirezultati.common.dto.GoalsDto;
 import com.sportskirezultati.common.dto.LeagueDto;
 import com.sportskirezultati.common.dto.StatusDto;
 import com.sportskirezultati.common.dto.TeamsDto;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class FootballMatch extends Event {
 
-  private LocalDateTime date;
+  private Instant date;
   private TeamsDto teams;
   private LeagueDto league;
 

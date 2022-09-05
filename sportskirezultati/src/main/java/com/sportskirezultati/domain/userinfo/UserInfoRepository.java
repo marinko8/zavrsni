@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.userinfo;
 
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +26,7 @@ public interface UserInfoRepository {
   /**
    * Find all that match by name, surname or username.
    */
-  List<UserInfo> search(@Param("searchText") String searchText);
+  List<BasicUserInfoDto> search(@Param("searchText") String searchText);
 
   /**
    * Save new entity.

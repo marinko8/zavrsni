@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sportskirezultati.domain.friends.FriendsRepository">
+  <resultMap id="FriendsResultMap" type="com.sportskirezultati.domain.friends.Friends">
+    <id column="FRIENDS_ID" property="id"/>
+    <result column="USER_ONE" property="userOne"/>
+    <result column="USER_TWO" property="userTwo"/>
+    <result column="FROM_DATE" property="fromDate"/>
+  </resultMap>
+
+  <select id="countUserFriends" parameterType="Long" resultType="Integer">
+    SELECT COUNT(*)
+      FROM FRIENDS
+    WHERE USER_ONE = #{userId}
+       OR USER_TWO = #{userId}
+  </select>
+
+  <select id="findFriendship" resultMap="FriendsResultMap">
+    SELECT *
+      FROM FRIENDS
+     WHERE (USER_ONE = #{userOne}
+       AND USER_TWO = #{userTwo})
+        OR (USER_ONE = #{userTwo}
+       AND USER_TWO = #{userOne})
+  </select>
+
+  <delete id="delete">
+    DELETE
+      FROM FRIENDS
+     WHERE (USER_ONE = #{userOneId}
+       AND USER_TWO = #{userTwoId})
+        OR (USER_ONE = #{userTwoId}
+       AND USER_TWO = #{userOneId})
+  </delete>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO FRIENDS (USER_ONE,
+                         USER_TWO,
+                         FROM_DATE
+    )
+    VALUES (#{userOne, jdbcType=BIGINT},
+            #{userTwo, jdbcType=BIGINT},
+            #{fromDate, jdbcType=DATE})
+  </insert>
+</mapper>

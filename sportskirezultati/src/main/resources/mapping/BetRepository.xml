@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sportskirezultati.domain.bet.BetRepository">
+  <resultMap id="betResultMap" type="com.sportskirezultati.domain.bet.Bet">
+    <id column="BET_ID" property="id"/>
+    <result column="USER_ID" property="userId"/>
+    <result column="POINTS" property="points"/>
+    <result column="PRIZE" property="prize"/>
+    <result column="ODD" property="odd"/>
+    <result column="WINNER_INDICATOR" property="winnerIndicator"/>
+    <result column="TSTAMP" property="tstamp"/>
+  </resultMap>
+
+  <resultMap id="betViewResultMap" type="com.sportskirezultati.common.dto.BetViewDto">
+    <id column="tstamp" property="betTstamp"/>
+    <result column="bets_count" property="betsCount"/>
+    <result column="winning_bets" property="winningBets"/>
+    <result column="total_odd" property="totalOdd"/>
+    <result column="points" property="points"/>
+    <result column="points_to_win" property="pointsToWin"/>
+  </resultMap>
+
+  <select id="findById" parameterType="Long" resultMap="betResultMap">
+    SELECT *
+      FROM bet
+     WHERE BET_ID = #{betId}
+  </select>
+
+  <select id="findByUser" parameterType="Long" resultMap="betResultMap">
+    SELECT *
+      FROM bet
+     WHERE USER_ID = #{userId}
+  </select>
+
+  <select id="findAllUnfinishedBets" parameterType="Long" resultMap="betResultMap">
+    SELECT *
+      FROM bet
+     WHERE WINNER_INDICATOR IS NULL
+  </select>
+
+  <select id="countByUserId" parameterType="Long" resultType="Integer">
+    SELECT COUNT(*)
+      FROM bet
+     WHERE USER_ID = #{userId}
+  </select>
+
+  <select id="countWinnersByUserId" parameterType="Long" resultType="Integer">
+    SELECT COUNT(*)
+      FROM bet
+     WHERE USER_ID = #{userId}
+       AND WINNER_INDICATOR = '1'
+  </select>
+  
+  <select id="getActiveBets" resultMap="betViewResultMap">
+    SELECT b.tstamp as tstamp,
+           b.odd as total_odd,
+           b.points as points,
+           b.prize as points_to_win,
+           (SELECT COUNT(*)
+              FROM BET_FIXTURES bf
+             WHERE bf.bet_id = b.bet_id) as count,
+           (SELECT COUNT(*)
+              FROM BET_FIXTURES bf
+             WHERE bf.bet_id = b.bet_id
+               AND bf.correct = '1') as winning_bets
+      FROM bet b
+     WHERE WINNER_INDICATOR IS NULL
+  </select>
+
+  <select id="getLastFinishedBets" resultMap="betViewResultMap">
+    SELECT b.tstamp as tstamp,
+           b.odd as total_odd,
+           b.points as points,
+           b.prize as points_to_win,
+           (SELECT COUNT(*)
+            FROM BET_FIXTURES bf
+            WHERE bf.bet_id = b.bet_id) as count,
+           (SELECT COUNT(*)
+            FROM BET_FIXTURES bf
+            WHERE bf.bet_id = b.bet_id
+              AND bf.correct = '1') as winning_bets
+     FROM bet b
+    WHERE WINNER_INDICATOR IS NOT NULL
+ ORDER BY tstamp desc
+    LIMIT #{betCount}
+  </select>
+
+  <update id="update">
+    UPDATE bet
+       SET USER_ID = #{bet.userId},
+           POINTS = #{bet.points},
+           PRIZE = #{bet.prize},
+           ODD = #{bet.odd},
+           WINNER_INDICATOR = #{bet.winnerIndicator},
+           TSTAMP = #{bet.tstamp}
+     WHERE BET_ID = #{bet.id}
+  </update>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO bet (USER_ID,
+                     POINTS,
+                     PRIZE,
+                     ODD,
+                     WINNER_INDICATOR,
+                     TSTAMP
+    )
+    VALUES (#{userId, jdbcType=BIGINT},
+            #{points, jdbcType=DECIMAL},
+            #{prize, jdbcType=DECIMAL},
+            #{odd, jdbcType=DECIMAL},
+            #{winnerIndicator, jdbcType=CHAR},
+            #{tstamp, jdbcType=DATE})
+  </insert>
+</mapper>

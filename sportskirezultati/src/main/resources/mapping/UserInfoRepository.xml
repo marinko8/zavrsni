@@ -15,6 +15,13 @@
     <result column="bankrupt_times" property="bankruptTimes"/>
   </resultMap>
 
+  <resultMap id="basicUserInfoResultMap" type="com.sportskirezultati.common.dto.BasicUserInfoDto">
+    <result column="user_id" property="userId"/>
+    <result column="name" property="name"/>
+    <result column="surname" property="surname"/>
+    <result column="username" property="username"/>
+  </resultMap>
+
   <sql id="select">
     SELECT user_info_id,
            user_id,
@@ -26,14 +33,18 @@
            bankrupt_times
   </sql>
 
-  <select id="search" parameterType="String" resultMap="userInfoResultMap">
-           <include refid="select"/>
+  <select id="search" parameterType="String" resultMap="basicUserInfoResultMap">
+    SELECT u.user_id as user_id,
+           u.username as username,
+           ui.name as name,
+           ui.surname as surname
       FROM user_info ui
       JOIN users u
         ON ui.user_id = u.user_id
-     WHERE ui.name LIKE UPPER(#{searchText}) || '%'
+     WHERE (ui.name LIKE UPPER(#{searchText}) || '%'
         OR ui.surname LIKE UPPER(#{searchText}) || '%'
-        OR u.username LIKE UPPER(#{searchText}) || '%'
+        OR u.username LIKE UPPER(#{searchText}) || '%')
+       AND u.disabled_indicator = '0'
   </select>
 
   <select id="findByUserId" parameterType="Long" resultMap="userInfoResultMap">

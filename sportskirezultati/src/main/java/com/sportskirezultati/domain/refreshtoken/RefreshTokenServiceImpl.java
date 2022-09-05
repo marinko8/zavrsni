@@ -26,7 +26,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     RefreshToken refreshToken = RefreshToken.builder().userId(userId)
         .token(UUID.randomUUID().toString())
         .expireAt(Instant.now().plusMillis(appProperties.getRefreshExpiration())).build();
-    refreshToken = repository.save(refreshToken);
+    repository.save(refreshToken);
 
     log.info("Saved refresh token with id: {}", refreshToken.getId());
     return refreshToken;

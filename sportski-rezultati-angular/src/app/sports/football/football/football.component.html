@@ -35,7 +35,7 @@
                 <div *ngIf="match.winnerOdds" class=" row bet-controls">
                     <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[0].value)" style="border-right: 1px solid;">
                         <div class="bet-value">
-                            <span>{{match.winnerOdds!.values[0].value}}</span>
+                            <span>1</span>
                         </div>
                         <div class="bet-odd">
                             <span>{{match.winnerOdds!.values[0].odd}}</span>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[1].value)" style="border-right: 1px solid;">
                         <div class="bet-value">
-                            <span>{{match.winnerOdds!.values[1].value}}</span>
+                            <span>X</span>
                         </div>
                         <div class="bet-odd">
                             <span>{{match.winnerOdds!.values[1].odd}}</span>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-4 bet-option" (click)="chooseWinner(match.id, match.winnerOdds!.values[2].value)">
                         <div class="bet-value">
-                            <span>{{match.winnerOdds!.values[2].value}}</span>
+                            <span>2</span>
                         </div>
                         <div class="bet-odd">
                             <span>{{match.winnerOdds!.values[2].odd}}</span>

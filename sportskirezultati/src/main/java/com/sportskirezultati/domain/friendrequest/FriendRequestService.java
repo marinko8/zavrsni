@@ -1,7 +1,6 @@
 package com.sportskirezultati.domain.friendrequest;
 
 import com.sportskirezultati.common.dto.BasicUserInfoDto;
-import com.sportskirezultati.domain.userinfo.UserInfo;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,12 +26,7 @@ public interface FriendRequestService {
   FriendRequest save(FriendRequest friendRequest);
 
   /**
-   * Delete by user sending.
+   * Delete by user sending and user receiving.
    */
-  void deleteByUserSending(Long userId);
-
-  /**
-   * Delete by user receiving.
-   */
-  void deleteByUserReceiving(Long userId);
+  void delete(Long userSending, Long userReceiving);
 }

@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.bet;
 
+import com.sportskirezultati.common.dto.BetViewDto;
 import java.util.List;
 
 /**
@@ -21,6 +22,14 @@ public interface BetService {
    * Returns all unfinished bets.
    */
   List<Bet> getAllUnfinishedBets();
+
+  Integer countByUserId(Long userId);
+
+  Integer countWinnersByUserId(Long userId);
+
+  List<BetViewDto> getActiveBets(Long userId);
+
+  List<BetViewDto> getLastFinishedBets(Long userId, Integer betCount);
 
   /**
    * Save new entity.

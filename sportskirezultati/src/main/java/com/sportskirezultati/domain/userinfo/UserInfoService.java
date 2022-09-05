@@ -1,5 +1,6 @@
 package com.sportskirezultati.domain.userinfo;
 
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface UserInfoService {
   /**
    * Get all that match by name, surname or username.
    */
-  List<UserInfo> search(String searchText);
+  List<BasicUserInfoDto> search(String searchText);
 
   /**
    * Save new entity.

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sportskirezultati.domain.friendrequest.FriendRequestRepository">
+  <resultMap id="friendRequestResultMap" type="com.sportskirezultati.domain.friendrequest.FriendRequest">
+    <id column="FRIEND_REQUEST_ID" property="id"/>
+    <result column="USER_SENDING" property="userSending"/>
+    <result column="USER_RECEIVING" property="userReceiving"/>
+  </resultMap>
+
+  <resultMap id="basicUserInfoResultMap" type="com.sportskirezultati.common.dto.BasicUserInfoDto">
+    <result column="user_id" property="userId"/>
+    <result column="name" property="name"/>
+    <result column="surname" property="surname"/>
+    <result column="username" property="username"/>
+  </resultMap>
+
+  <select id="findByUserSendingAndUserReceiving" parameterType="Long" resultMap="friendRequestResultMap">
+    SELECT *
+      FROM FRIEND_REQUEST
+     WHERE USER_SENDING = #{userSending}
+       AND USER_RECEIVING = #{userReceiving}
+  </select>
+
+  <select id="findRequestsForUser" resultMap="basicUserInfoResultMap">
+    SELECT *
+    FROM FRIEND_REQUEST
+    WHERE USER_SENDING = #{userSending}
+      AND USER_RECEIVING = #{userReceiving}
+  </select>
+
+  <delete id="delete">
+    DELETE
+      FROM FRIEND_REQUEST
+     WHERE USER_SENDING = #{userSending}
+       AND USER_RECEIVING = #{userReceiving}
+  </delete>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO FRIEND_REQUEST (USER_SENDING,
+                                USER_RECEIVING
+    )
+    VALUES (#{userSending, jdbcType=BIGINT},
+            #{userReceiving, jdbcType=BIGINT})
+  </insert>
+</mapper>

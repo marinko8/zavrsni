@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-/** Implementation of {@link RapidService}. */
+/**
+ * Implementation of {@link RapidService}.
+ */
 @Profile("mock-external")
 @Service
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class RapidServiceImplMock implements RapidService {
   }
 
   @Override
-  public OddsResponseDto getOddsByDate(LocalDate date) {
+  public OddsResponseDto getOddsByDateAndLeague(Integer leagueId, LocalDate date) {
     return null;
   }
 

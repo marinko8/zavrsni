@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class BetFixtureServiceImpl implements BetFixtureService {
 
-  private BetFixtureRepository repository;
+  private final BetFixtureRepository repository;
 
   @Override
   public BetFixture getById(Long betFixtureId) {

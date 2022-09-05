@@ -26,6 +26,7 @@ public class AppProperties {
   private String rapidApiKey;
 
   private List<Integer> supportedLeagues;
+  private Integer profileBetsCount;
 
   private String betCheckCron;
   private String banRemoveCron;

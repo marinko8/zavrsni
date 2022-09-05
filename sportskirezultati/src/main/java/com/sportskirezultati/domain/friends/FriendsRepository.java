@@ -11,6 +11,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface FriendsRepository {
 
+  Integer countUserFriends(@Param("userId") Long userId);
+
+  Friends findFriendship(@Param("userOne") Long userOne, @Param("userTwo") Long userTwo);
+
   /**
    * Save new entity.
    */

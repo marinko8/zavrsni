@@ -48,7 +48,10 @@ public class Config {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable().authorizeRequests()
-        .antMatchers(EndpointUrls.SPORT_API + "/**").authenticated()
+        .antMatchers(EndpointUrls.SPORT_API + "/**").permitAll()
+        .antMatchers(EndpointUrls.SEARCH_API + "/**").permitAll()
+        .antMatchers(EndpointUrls.FRIENDS_API + "/**").permitAll()
+        .antMatchers(EndpointUrls.PROFILE_API + "/**").permitAll()
         .antMatchers(EndpointUrls.ADMIN_API + "/**").hasRole(Role.ADMIN.getCode())
         .antMatchers(EndpointUrls.MOD_API + "/**")
         .hasAnyRole(Role.MOD.getCode(), Role.ADMIN.getCode())

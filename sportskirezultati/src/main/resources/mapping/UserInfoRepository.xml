@@ -16,7 +16,7 @@
   </resultMap>
 
   <resultMap id="basicUserInfoResultMap" type="com.sportskirezultati.common.dto.BasicUserInfoDto">
-    <result column="user_id" property="userId"/>
+    <result column="user_id" property="id"/>
     <result column="name" property="name"/>
     <result column="surname" property="surname"/>
     <result column="username" property="username"/>
@@ -41,9 +41,9 @@
       FROM user_info ui
       JOIN users u
         ON ui.user_id = u.user_id
-     WHERE (ui.name LIKE UPPER(#{searchText}) || '%'
-        OR ui.surname LIKE UPPER(#{searchText}) || '%'
-        OR u.username LIKE UPPER(#{searchText}) || '%')
+     WHERE (UPPER(ui.name) LIKE UPPER(#{searchText}) || '%'
+        OR UPPER(ui.surname) LIKE UPPER(#{searchText}) || '%'
+        OR UPPER(u.username) LIKE UPPER(#{searchText}) || '%')
        AND u.disabled_indicator = '0'
   </select>
 
@@ -52,6 +52,18 @@
     FROM user_info ui
     WHERE ui.user_id = #{userId}
   </select>
+
+  <update id="update">
+    UPDATE user_info
+    SET USER_ID = #{userId},
+        NAME = #{name},
+        SURNAME = #{surname},
+        BANNED_INDICATOR = #{bannedIndicator},
+        BANNED_TO = #{bannedTo},
+        POINTS = #{points},
+        BANKRUPT_TIMES = #{bankruptTimes}
+    WHERE USER_INFO_ID = #{id}
+  </update>
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO user_info (user_id,

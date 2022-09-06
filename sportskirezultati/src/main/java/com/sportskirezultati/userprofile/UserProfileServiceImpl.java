@@ -53,8 +53,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     Integer numberOfGames = betService.countByUserId(userId);
     Integer numberOfWinners = betService.countWinnersByUserId(userId);
     List<BetViewDto> bets = betService.getActiveBets(userId);
+    bets.forEach(b -> b.setIsActive(true));
     List<BetViewDto> finishedBets = betService.getLastFinishedBets(userId,
         appProperties.getProfileBetsCount());
+    finishedBets.forEach(b -> b.setIsActive(false));
     bets.addAll(finishedBets);
 
     return ProfileDto.builder()

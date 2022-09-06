@@ -62,13 +62,10 @@ public class BetCheckServiceImpl implements BetsCheckService {
     if (Constants.INDICATOR_YES.equals(bet.getWinnerIndicator())) {
       // Add points if bet is winner
       userInfo.setPoints(userInfo.getPoints() + betPoints);
-    } else if ((userInfo.getPoints() - betPoints) < appProperties.getMinimalBet()) {
+    } else if ((userInfo.getPoints()) < appProperties.getMinimalBet()) {
       // Bankrupt
       userInfo.setPoints(appProperties.getBasePoints());
       userInfo.setBankruptTimes(userInfo.getBankruptTimes() + 1);
-    } else {
-      // Subtract points
-      userInfo.setPoints(userInfo.getPoints() - betPoints);
     }
 
     userInfoService.update(userInfo);

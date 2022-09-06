@@ -90,11 +90,7 @@ export class FootballComponent implements OnInit {
   confirm() {
     this.footballService.setNewBet(this.betsPlaced, this.betPoints, this.oddsSum).subscribe({
       next: (res) => {
-        this.removeAll();
-        this.userPoints = this.userPoints - this.betPoints;
-        let user = this.storageService.getUser();
-        user.points = this.userPoints;
-        this.storageService.saveUser(user);
+        window.location.reload();
       },
       error: (e) => console.log("Greška prilikom postavljanja nove igre")
       

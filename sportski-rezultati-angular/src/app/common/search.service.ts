@@ -12,6 +12,6 @@ export class SearchService {
   constructor(private httpClient: HttpClient) { }
 
   search(text: string | undefined | null): Observable<Array<BasicUserInfoDto>> {
-    return this.httpClient.get<Array<BasicUserInfoDto>>(environment.baseUrl + "/api/search?=" + text);
+    return this.httpClient.get<Array<BasicUserInfoDto>>(environment.baseUrl + "/api/search?text=" + text);
   }
 }

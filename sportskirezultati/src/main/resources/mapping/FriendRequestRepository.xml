@@ -11,7 +11,7 @@
   </resultMap>
 
   <resultMap id="basicUserInfoResultMap" type="com.sportskirezultati.common.dto.BasicUserInfoDto">
-    <result column="user_id" property="userId"/>
+    <result column="user_id" property="id"/>
     <result column="name" property="name"/>
     <result column="surname" property="surname"/>
     <result column="username" property="username"/>

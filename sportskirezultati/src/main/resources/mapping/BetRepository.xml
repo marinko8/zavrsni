@@ -16,7 +16,7 @@
 
   <resultMap id="betViewResultMap" type="com.sportskirezultati.common.dto.BetViewDto">
     <id column="tstamp" property="betTstamp"/>
-    <result column="bets_count" property="betsCount"/>
+    <result column="count" property="betsCount"/>
     <result column="winning_bets" property="winningBets"/>
     <result column="total_odd" property="totalOdd"/>
     <result column="points" property="points"/>

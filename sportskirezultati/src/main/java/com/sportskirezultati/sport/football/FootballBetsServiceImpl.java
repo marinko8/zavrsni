@@ -11,6 +11,8 @@ import com.sportskirezultati.domain.bet.Bet;
 import com.sportskirezultati.domain.bet.BetService;
 import com.sportskirezultati.domain.betfixtures.BetFixture;
 import com.sportskirezultati.domain.betfixtures.BetFixtureService;
+import com.sportskirezultati.domain.userinfo.UserInfo;
+import com.sportskirezultati.domain.userinfo.UserInfoService;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -30,6 +32,7 @@ public class FootballBetsServiceImpl implements FootballBetsService {
   private final FetchFootballDataService fetchFootballDataService;
   private final BetService betService;
   private final BetFixtureService betFixtureService;
+  private final UserInfoService userInfoService;
 
   @Override
   public EventsDto fetchEventsForDate(LocalDate date) {
@@ -42,12 +45,16 @@ public class FootballBetsServiceImpl implements FootballBetsService {
     Bet domainBet = Bet.builder()
         .userId(userId)
         .points(bet.getPoints())
+        .odd(bet.getOdd())
         .prize(bet.getPoints() * bet.getOdd())
-        .winnerIndicator(Constants.INDICATOR_NO)
         .tstamp(Instant.now()).build();
     betService.save(domainBet);
 
     saveGames(domainBet.getId(), bet);
+
+    UserInfo userInfo = userInfoService.getByUserId(userId);
+    userInfo.setPoints(userInfo.getPoints() - bet.getPoints());
+    userInfoService.update(userInfo);
 
     log.info("Bet {} is saved successfully", domainBet.getId());
     return new BusinessResponse(Collections.emptyList());
@@ -59,7 +66,7 @@ public class FootballBetsServiceImpl implements FootballBetsService {
           .betId(betId)
           .sportCode(EventType.FOOTBALL.getCode())
           .event(game.getFixtureId())
-          .odd(bet.getOdd())
+          .odd(game.getOdd())
           .betType(game.getType())
           .option(game.getValue())
           .build();

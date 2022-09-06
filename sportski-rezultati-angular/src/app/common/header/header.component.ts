@@ -22,7 +22,9 @@ export class HeaderComponent implements OnInit {
   
   loggedInUserId?: number = 5;
 
-  constructor(private searchService: SearchService, private router: Router, private storageService: StorageService) { }
+  constructor(private searchService: SearchService, private router: Router, private storageService: StorageService) { 
+    this.loggedInUserId = this.storageService.getUser().userId;
+  }
 
   ngOnInit(): void {
   }
@@ -36,7 +38,7 @@ export class HeaderComponent implements OnInit {
       next: (res) => this.searchUsers = res,
       error: (e) => this.searchUsers = []
     })
-
+    
     this.searchUsers.forEach(u => u.initials = u.name!.substring(0, 1) + u.surname!.substring(0, 1))
     this.searchResults = true;
   }

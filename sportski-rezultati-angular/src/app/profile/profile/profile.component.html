@@ -52,7 +52,7 @@
 
        <div *ngFor="let bet of userDetails?.bets" class="row" style="margin: 10px 10px;">
         <div class="col-3 col-sm-2">
-            <span>{{bet.date}}</span>
+            <span>{{bet.betTstamp  | date:'d.MM.yyyy.'}}</span>
         </div>
         <div class="col-3 col-sm-2">
             <span>{{bet.winningBets}}/{{bet.betsCount}}</span>

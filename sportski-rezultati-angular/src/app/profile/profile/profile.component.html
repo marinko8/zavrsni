@@ -26,9 +26,6 @@
             <p class="info-title">Games</p>
             <p>{{userDetails?.numberOfGames}}</p>
         </div>
-        <div class="col-0 col-md-2 info-box">
-            <button class="btn btn-success">Send a friend request</button>
-        </div>
         <div class="col-6 col-md-2 info-box">
             <p class="info-title">Success</p>
             <p>{{userDetails?.success}}%</p>
@@ -40,6 +37,39 @@
         <div class="col-6 col-md-2 info-box">
             <p class="info-title">Bankrupt times</p>
             <p>{{userDetails?.bankrupt}}</p>
+        </div>
+    </div>
+    <div *ngIf="!isOwner" class="row action-cont">
+        <div *ngIf="!userDetails?.isFriend 
+        && !userDetails?.requestSended 
+        && !userDetails?.requestReceived" (click)="sendRequestAction()" class="col-6 col-md-3">
+            <button class="btn btn-success">Send a friend request</button>
+        </div>
+        <div *ngIf="userDetails?.requestSended" (click)="cancelRequestAction()" class="col-6 col-md-3">
+            <button class="btn btn-secondary">Cancel friend rquest</button>
+        </div>
+        <div *ngIf="userDetails?.requestReceived" (click)="acceptRequestAction()" class="col-6 col-md-3">
+            <button class="btn btn-success">Accept request</button>
+        </div>
+        <div *ngIf="userDetails?.requestReceived" (click)="declineRequestAction()" class="col-6 col-md-3">
+            <button class="btn btn-secondary">Decline request</button>
+        </div>
+        <div *ngIf="userDetails?.isFriend" (click)="unfriendAction()" class="col-6 col-md-3">
+            <button class="btn btn-secondary">Unfriend</button>
+        </div>
+        <div *ngIf="userDetails?.role !== 'MOD'
+        && myRole === 'ADMIN'" (click)="giveModAction()" class="col-6 col-md-3">
+            <button class="btn btn-primary">Give mod</button>
+        </div>
+        <div *ngIf="userDetails?.role !== 'MOD'
+        && myRole === 'ADMIN'" (click)="removeModAction()" class="col-6 col-md-3">
+            <button class="btn btn-secondary">Remove mod</button>
+        </div>
+        <div *ngIf="myRole === 'ADMIN' || myRole === 'MOD'" (click)="banUserAction()" class="col-6 col-md-3">
+            <button class="btn btn-danger">Ban user</button>
+        </div>
+        <div *ngIf="myRole === 'ADMIN' && userDetails?.role !== 'ADMIN'" (click)="disableUserAction()" class="col-6 col-md-3">
+            <button class="btn btn-danger">Disable user</button>
         </div>
     </div>
 </div>

@@ -25,6 +25,7 @@
 }
 
 .info-box {
+    margin-top: 25px;
     margin-bottom: 25px;
 }
 
@@ -35,6 +36,10 @@
 
 .info-title {
     color: rgb(69, 136, 190);
+}
+
+.action-cont button {
+    margin: 20px;
 }
 
 .user-info-container {

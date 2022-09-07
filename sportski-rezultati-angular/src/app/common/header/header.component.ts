@@ -20,10 +20,12 @@ export class HeaderComponent implements OnInit {
 
   searchUsers: Array<BasicUserInfoDto> = [];
   
-  loggedInUserId?: number = 5;
+  loggedInUserId?: number;
+  points: number = 0;
 
   constructor(private searchService: SearchService, private router: Router, private storageService: StorageService) { 
     this.loggedInUserId = this.storageService.getUser().userId;
+    this.points = this.storageService.getUser().points;
   }
 
   ngOnInit(): void {

@@ -51,6 +51,17 @@
     color: white;
 }
 
+.points-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.points-cont span {
+    color: rgb(13, 85, 13); 
+    font-weight: bold;
+}
+
 @media(max-width:720px) {
     .bars-menu-btn {
         display: block;

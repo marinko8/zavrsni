@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         .userId(userDetails.getId())
         .username(userDetails.getUsername())
         .email(userDetails.getEmail())
-        .roles(roles)
+        .roles(roles.stream().map(Role::fetchNameByCode).collect(Collectors.toList()))
         .points(userInfo.getPoints())
         .jwtToken(jwt)
         .refreshToken(refreshToken.getToken())

@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [page]="'FOOTBALL'"></app-header>
 <div class="container" style="margin-top: 10vh;">
     <div *ngFor="let league of leaguesMap | keyvalue" class="league-container card">
         <div class="league-header">
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<div *ngIf="betsPlaced.length > 0" class="placed-bets-container">
+<div  *ngIf="betsPlaced.length > 0" class="placed-bets-container">
     <div class="container card bets-content">
         <div *ngFor="let bet of betsPlaced; index as i" class="row bet-row-container">
             <div class="col-7 bet-match-info">
@@ -91,6 +91,10 @@
                 <input type="number" name="points-betting" [(ngModel)]="betPoints" class="form-control">
             </div>
         </div>
+        <p *ngIf="betPoints && betPoints > userPoints"
+        class="points-msg" style="color: red;">Not enough points</p>
+        <p *ngIf="betPoints && betPoints < 10"
+            class="points-msg" style="color: red;">Minimal 10 points</p>
         <div class="row odds-sum">
             <p>Odds: {{oddsSum  | number:'1.1-2'}}</p>
         </div>

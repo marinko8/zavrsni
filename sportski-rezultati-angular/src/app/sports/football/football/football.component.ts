@@ -15,7 +15,7 @@ export class FootballComponent implements OnInit {
   leaguesMap: Map<Number, Array<FootballMatch>> = new Map();
 
   userPoints: number = 0
-  betPoints: number = 0;
+  betPoints?: number;
   oddsSum: number = 0;
 
   betsPlaced: Array<PlacedBetDto> = [];
@@ -88,6 +88,10 @@ export class FootballComponent implements OnInit {
   }
 
   confirm() {
+    if(!this.betPoints || this.betPoints < 10 || this.betPoints > this.userPoints) {
+      return;
+    }
+
     this.footballService.setNewBet(this.betsPlaced, this.betPoints, this.oddsSum).subscribe({
       next: (res) => window.location.reload(),
       error: (e) => console.log("Greška prilikom postavljanja nove igre")

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/auth/storage.service';
@@ -11,6 +11,8 @@ import { SearchService } from '../search.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Input() page?: string;
+
   searchForm = new FormGroup({
     searchText: new FormControl('', Validators.required)
   });
@@ -56,6 +58,10 @@ export class HeaderComponent implements OnInit {
 
   loadMyProfile() {
     this.router.navigateByUrl('/profile/' + this.loggedInUserId);
+  }
+
+  loadEventsPage(){
+    this.router.navigateByUrl('/football');
   }
 
   loadUser(userId: Number | undefined) {

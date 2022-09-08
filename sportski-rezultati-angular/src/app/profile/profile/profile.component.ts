@@ -16,20 +16,35 @@ export class ProfileComponent implements OnInit {
   myId: Number = 1;
   myRole: String = "USER";
   isOwner: Boolean = false;
+  route: any;
 
   constructor(private activateRoute: ActivatedRoute, private profileService: ProfileService, 
     private storageService: StorageService) {
-    this.userId = activateRoute.snapshot.params['userId'];
+    this.activateRoute.params.subscribe((params: any) => {
+        this.paramsChange(params.userId);
+    });
+
     this.myId = this.storageService.getUser().userId;
     this.myRole = this.storageService.getUser().roles[0];
-    this.isOwner = this.userId == this.myId;
    }
 
   ngOnInit(): void {
+    this.userId = this.activateRoute.snapshot.params['userId'];
+    this.isOwner = this.userId == this.myId;
+
     this.profileService.getUserDetails(this.userId).subscribe({
       next: (res) => this.handleSuccessInfoFetch(res),
       error: (e) => console.log("Greska prilikom dohvata podataka")
-      
+    })
+  }
+
+  paramsChange(userId: any) {
+    this.userId = this.activateRoute.snapshot.params['userId'];
+    this.isOwner = this.userId == this.myId;
+    
+    this.profileService.getUserDetails(userId).subscribe({
+      next: (res) => this.handleSuccessInfoFetch(res),
+      error: (e) => console.log("Greska prilikom dohvata podataka")
     })
   }
 

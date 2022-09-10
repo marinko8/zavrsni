@@ -2,11 +2,14 @@ package com.sportskirezultati.friendsmanagment;
 
 import com.sportskirezultati.auth.UserDetailsImpl;
 import com.sportskirezultati.common.EndpointUrls;
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import com.sportskirezultati.common.dto.BusinessResponse;
 import com.sportskirezultati.domain.friends.FriendsService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class FriendsController {
 
   private final FriendsService friendsService;
+
+  @GetMapping(EndpointUrls.FRIENDS_LIST)
+  public ResponseEntity<List<BasicUserInfoDto>> getFriendsList(Authentication authentication) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+    return ResponseEntity.ok(friendsService.findUserFriends(userDetails.getId()));
+  }
 
   @PostMapping(EndpointUrls.ADD_FRIEND)
   public ResponseEntity<BusinessResponse> addFriend(Authentication authentication,
@@ -56,4 +65,6 @@ public class FriendsController {
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
     return ResponseEntity.ok(friendsService.removeFriend(userDetails, userId));
   }
+
+
 }

@@ -19,6 +19,11 @@ public interface FriendRequestRepository {
   List<BasicUserInfoDto> findRequestsForUser(@Param("userId") Long userId);
 
   /**
+   * Find all friend requests user made.
+   */
+  List<BasicUserInfoDto> findRequestsUserMade(@Param("userId") Long userId);
+
+  /**
    * Find request between two users.
    */
   FriendRequest findByUserSendingAndUserReceiving(@Param("userSending") Long userSending,

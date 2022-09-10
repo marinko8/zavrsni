@@ -1,5 +1,7 @@
 package com.sportskirezultati.domain.friends;
 
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface FriendsRepository {
+
+  List<BasicUserInfoDto> findUserFriends(@Param("userId") Long userId);
 
   Integer countUserFriends(@Param("userId") Long userId);
 

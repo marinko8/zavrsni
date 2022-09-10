@@ -1,12 +1,17 @@
 package com.sportskirezultati.domain.friends;
 
 import com.sportskirezultati.auth.UserDetailsImpl;
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import com.sportskirezultati.common.dto.BusinessResponse;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Service for {@link Friends}.
  */
 public interface FriendsService {
+
+  List<BasicUserInfoDto> findUserFriends(Long userId);
 
   /**
    * Returns number of user friends.

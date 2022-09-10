@@ -2,6 +2,7 @@ package com.sportskirezultati.userprofile;
 
 import com.sportskirezultati.auth.UserDetailsImpl;
 import com.sportskirezultati.common.Constants;
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import com.sportskirezultati.common.dto.BetViewDto;
 import com.sportskirezultati.common.dto.ProfileDto;
 import com.sportskirezultati.config.AppProperties;
@@ -41,6 +42,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     UserInfo userInfo = userInfoService.getByUserId(userId);
     Integer numberOfFriends = friendsService.countUserFriends(userId);
 
+    List<BasicUserInfoDto> requestsReceived =
+        isOwner ? friendRequestService.getRequestsForUser(userId) : null;
+    List<BasicUserInfoDto> requestsMade =
+        isOwner ? friendRequestService.getRequestsUserMade(userId) : null;
     Friends friends = isOwner ? null : friendsService.findFriendship(userId, userDetails.getId());
 
     Boolean requestSent = isOwner || friends != null ? null
@@ -70,6 +75,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         .numberOfGames(numberOfGames)
         .success(finishedBets.isEmpty() ? 100 : (numberOfWinners / finishedBets.size()) * 100)
         .numberOfFriends(numberOfFriends)
+        .requestsReceived(requestsReceived)
+        .requestsSended(requestsMade)
         .isFriend(friends != null)
         .requestSended(requestSent)
         .requestReceived(requestReceived)

@@ -1,3 +1,4 @@
+import { BasicUserInfoDto } from "./basic-user-info-dto";
 import { BetSummary } from "./bet-summary";
 
 export class UserDetails {
@@ -12,6 +13,9 @@ export class UserDetails {
     success: Number | undefined;
     numberOfGames: Number | undefined;
     numberOfFriends: Number | undefined;
+
+    requestsReceived: BasicUserInfoDto[] | undefined;
+    requestsSended: BasicUserInfoDto[] | undefined;
 
     isFriend?: Boolean | undefined;
     requestSended?: Boolean | undefined;

@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor, authInterceptorProviders } from './common/auth.interceptor';
 import { AuthenticationGuard } from './auth.guard';
+import { FriendsModalComponent } from './profile/friends-modal/friends-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthenticationGuard } from './auth.guard';
     HomeComponent,
     ProfileComponent,
     HeaderComponent,
-    FootballComponent
+    FootballComponent,
+    FriendsModalComponent
   ],
   imports: [
     BrowserModule,

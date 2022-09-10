@@ -32,6 +32,7 @@ public class EndpointUrls {
   public static final String ACCEPT_REQUEST = "/accept";
   public static final String DECLINE_REQUEST = "/decline";
   public static final String REMOVE_FRIEND = "/removeFriend";
+  public static final String FRIENDS_LIST = "/friendsList";
 
   public static final String ADMIN_API = "api/admin";
   public static final String DISABLE_USER = "/disableUser";

@@ -11,6 +11,37 @@
     <result column="FROM_DATE" property="fromDate"/>
   </resultMap>
 
+  <resultMap id="basicUserInfoResultMap" type="com.sportskirezultati.common.dto.BasicUserInfoDto">
+    <result column="user_id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="surname" property="surname"/>
+    <result column="username" property="username"/>
+  </resultMap>
+
+  <select id="findUserFriends" parameterType="Long" resultMap="basicUserInfoResultMap">
+    SELECT u.user_id as user_id,
+           u.username as username,
+           ui.name as name,
+           ui.surname as surname
+      FROM friends f
+      JOIN user_info ui
+        ON f.user_two = ui.user_id
+      JOIN users u
+        ON ui.user_id = u.user_id
+     WHERE f.user_one = #{userId}
+ UNION ALL
+    SELECT u.user_id as user_id,
+           u.username as username,
+           ui.name as name,
+           ui.surname as surname
+      FROM friends f
+      JOIN user_info ui
+        ON f.user_one = ui.user_id
+      JOIN users u
+        ON ui.user_id = u.user_id
+     WHERE f.user_two = #{userId}
+  </select>
+
   <select id="countUserFriends" parameterType="Long" resultType="Integer">
     SELECT COUNT(*)
       FROM FRIENDS

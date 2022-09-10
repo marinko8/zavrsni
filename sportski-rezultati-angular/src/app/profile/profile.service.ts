@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BasicUserInfoDto } from '../dto/basic-user-info-dto';
 import { BetSummary } from '../dto/bet-summary';
 import { UserDetails } from '../dto/user-details';
 import { FootballResponse } from '../sports/football/dto/football-response';
@@ -14,6 +15,10 @@ export class ProfileService {
 
   getUserDetails(userId: Number | undefined) {
     return this.httpClient.get<UserDetails>(environment.baseUrl + '/api/profile/profile?userId=' + userId);
+  }
+
+  getFriendsList() {
+    return this.httpClient.get<Array<BasicUserInfoDto>>(environment.baseUrl + '/api/friends/friendsList');
   }
 
   sendRequest(userId: Number | undefined) {

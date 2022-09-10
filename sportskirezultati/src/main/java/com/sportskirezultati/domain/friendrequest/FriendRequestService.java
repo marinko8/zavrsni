@@ -14,6 +14,8 @@ public interface FriendRequestService {
    */
   List<BasicUserInfoDto> getRequestsForUser(Long userId);
 
+  List<BasicUserInfoDto> getRequestsUserMade(Long userId);
+
   /**
    * Get request between two users.
    */

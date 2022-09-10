@@ -32,7 +32,7 @@
         </div>
         <div class="col-6 col-md-2 info-box">
             <p class="info-title">Friends</p>
-            <p>{{userDetails?.numberOfFriends}}</p>
+            <p (click)="viewFriends()" [ngStyle]="{'color': isOwner ? 'rgb(111, 170, 224)' : ''}">{{userDetails?.numberOfFriends}}</p>
         </div>
         <div class="col-6 col-md-2 info-box">
             <p class="info-title">Bankrupt times</p>
@@ -74,7 +74,70 @@
     </div>
 </div>
 
-<div class="container">
+<div *ngIf="isOwner && userDetails?.requestsReceived && userDetails!.requestsReceived!.length > 0" class="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header">
+          Friend requests received
+        </div>
+
+       <div *ngFor="let request of userDetails?.requestsReceived" class="row" style="margin: 10px 10px;">
+        <div class="col-3 col-sm-2">
+            <div class="user-picture-sm">
+                <span>{{request.initials}}</span>
+            </div>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{request.name}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{request.surname}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>( {{request.username}} )</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <button (click)="acceptRequest(request.id)" class="btn btn-success">Accept</button>
+        </div>
+        <div class="col-3 col-sm-2">
+            <button (click)="declineRequest(request.id)" class="btn btn-secondary">Decline</button>
+        </div>
+        <hr  style="margin-top: 10px;">
+       </div> 
+    </div>
+</div>
+
+<div *ngIf="isOwner && userDetails?.requestsSended && userDetails!.requestsSended!.length > 0" class="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header">
+          Friend requests sent
+        </div>
+
+       <div *ngFor="let request of userDetails?.requestsSended" class="row" style="margin: 10px 10px;">
+        <div class="col-3 col-sm-2">
+            <div class="user-picture-sm">
+                <span>{{request.initials}}</span>
+            </div>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{request.name}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>{{request.surname}}</span>
+        </div>
+        <div class="col-3 col-sm-2">
+            <span>( {{request.username}} )</span>
+        </div>
+        <div class="col-3 col-sm-2">
+        </div>
+        <div class="col-3 col-sm-2">
+            <button (click)="cancelRequest(request.id)" class="btn btn-secondary">Cancel</button>
+        </div>
+        <hr style="margin-top: 10px;">
+       </div> 
+    </div>
+</div>
+
+<div *ngIf="userDetails?.bets && userDetails!.bets!.length > 0" class="container">
     <div class="card" style="width: 100%;">
         <div class="card-header">
           Last games

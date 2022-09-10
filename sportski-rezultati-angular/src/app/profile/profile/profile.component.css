@@ -24,6 +24,20 @@
     color: rgb(37, 37, 37);
 }
 
+.user-picture-sm {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgb(23, 107, 79);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-picture-sm span {
+    color: white;
+}
+
 .info-box {
     margin-top: 25px;
     margin-bottom: 25px;

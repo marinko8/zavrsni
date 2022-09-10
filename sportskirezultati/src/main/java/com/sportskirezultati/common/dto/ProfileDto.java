@@ -28,6 +28,9 @@ public class ProfileDto {
   private Integer numberOfGames;
   private Integer numberOfFriends;
 
+  private List<BasicUserInfoDto> requestsReceived;
+  private List<BasicUserInfoDto> requestsSended;
+
   private Boolean isFriend;
   private Boolean requestSended;
   private Boolean requestReceived;

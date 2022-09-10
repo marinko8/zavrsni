@@ -23,6 +23,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
   }
 
   @Override
+  public List<BasicUserInfoDto> getRequestsUserMade(Long userId) {
+    return repository.findRequestsUserMade(userId);
+  }
+
+  @Override
   public FriendRequest getForUserSendingAndUserReceiving(Long userSending, Long userReceiving) {
     return repository.findByUserSendingAndUserReceiving(userSending, userReceiving);
   }

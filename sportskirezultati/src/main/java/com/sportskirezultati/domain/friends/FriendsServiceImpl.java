@@ -1,11 +1,13 @@
 package com.sportskirezultati.domain.friends;
 
 import com.sportskirezultati.auth.UserDetailsImpl;
+import com.sportskirezultati.common.dto.BasicUserInfoDto;
 import com.sportskirezultati.common.dto.BusinessResponse;
 import com.sportskirezultati.domain.friendrequest.FriendRequest;
 import com.sportskirezultati.domain.friendrequest.FriendRequestService;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class FriendsServiceImpl implements FriendsService {
 
   private final FriendsRepository repository;
   private final FriendRequestService friendRequestService;
+
+  @Override
+  public List<BasicUserInfoDto> findUserFriends(Long userId) {
+    return repository.findUserFriends(userId);
+  }
 
   @Override
   public Integer countUserFriends(Long userId) {

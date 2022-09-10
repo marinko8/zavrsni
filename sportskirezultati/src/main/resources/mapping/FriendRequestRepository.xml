@@ -17,18 +17,37 @@
     <result column="username" property="username"/>
   </resultMap>
 
-  <select id="findByUserSendingAndUserReceiving" parameterType="Long" resultMap="friendRequestResultMap">
+  <select id="findByUserSendingAndUserReceiving" resultMap="friendRequestResultMap">
     SELECT *
       FROM FRIEND_REQUEST
      WHERE USER_SENDING = #{userSending}
        AND USER_RECEIVING = #{userReceiving}
   </select>
 
-  <select id="findRequestsForUser" resultMap="basicUserInfoResultMap">
-    SELECT *
-    FROM FRIEND_REQUEST
-    WHERE USER_SENDING = #{userSending}
-      AND USER_RECEIVING = #{userReceiving}
+  <select id="findRequestsForUser" parameterType="Long" resultMap="basicUserInfoResultMap">
+    SELECT u.user_id as user_id,
+           u.username as username,
+           ui.name as name,
+           ui.surname as surname
+      FROM FRIEND_REQUEST fr
+      JOIN user_info ui
+        ON fr.user_sending = ui.user_id
+      JOIN users u
+        ON ui.user_id = u.user_id
+     WHERE fr.user_receiving = #{userId}
+  </select>
+
+  <select id="findRequestsUserMade" parameterType="Long" resultMap="basicUserInfoResultMap">
+    SELECT u.user_id as user_id,
+           u.username as username,
+           ui.name as name,
+           ui.surname as surname
+      FROM FRIEND_REQUEST fr
+      JOIN user_info ui
+        ON fr.user_receiving = ui.user_id
+      JOIN users u
+        ON ui.user_id = u.user_id
+     WHERE fr.user_sending = #{userId}
   </select>
 
   <delete id="delete">
